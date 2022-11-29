@@ -1,12 +1,12 @@
 const fs = require('fs')
 const path = require('path')
 // Helper method for generating unique ids
-const uuid = require('./helpers/uuid');
+const uuid = require('../helpers/uuid');
 
 
 // require express
 const express = require('express');
-const { title } = require('process');
+// const { title } = require('process');
 
 const PORT = process.env.PORT || 3001;
 
@@ -58,15 +58,25 @@ app.get("/api/notes", (req, res) => {
 app.post("/api/notes", (req, res) => {
     console.info(`${req.method} request received to add notes`);
 
+    // Destructuring assignment for the items in req.body
+    const { text, title } = req.body;
+
     if (title && text) {
+        // variable for the object we are saving
         const newNote = {
             title,
             text,
             id: uuid(),
         };
-        //     // return db.json file return all saved notes as JSON
+        // return db.json file return all saved notes as JSON and append new note
         readAndAppend(newNote, "./db/db.json");
-        res.json('New Note added!');
+
+        const response = {
+            status: 'success',
+            body: newNote,
+        };
+
+        res.json(response);
     } else {
         res.errored('error could not add note');
     }
