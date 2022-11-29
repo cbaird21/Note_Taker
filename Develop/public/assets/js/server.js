@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path')
-const { randomUUID } = require("crypto");
+// Helper method for generating unique ids
+const uuid = require('./helpers/uuid');
 
 
 // require express
@@ -19,6 +20,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 // HTML Routes needing to be created
 
+// GET * should return the 'index.html' file
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "/public/index.html"));
+});
 // GET '/notes' should 
 app.get('/notes', (req, res) => {
     // return the 'notes.html' file
@@ -43,20 +48,13 @@ const readAndAppend = (content, file) => {
         }
     });
 };
-const clearData = () => {
-    fs.unlink("./db/db.json");
-};
 
 // API Routes
 app.get("/api/notes", (req, res) => {
     console.info(`${req.method} request received for notes`);
     readFromFile("./db/db.json").then((data) => res.json(JSON.parse(data)));
 });
-// GET '/api/notes' should read the db.json file and return all saved notes as JSON
-// app.get('/api/notes', (req, res) => {
-// return the 'notes.html' file
-// POST '/api/notes' should receive a new note to save on the request body, add it to the 'db.json' file, and then return the new note to the client. (HINT look into npm packages that could do this for us)
-// log our note to the terminal
+
 app.post("/api/notes", (req, res) => {
     console.info(`${req.method} request received to add notes`);
 
@@ -64,7 +62,7 @@ app.post("/api/notes", (req, res) => {
         const newNote = {
             title,
             text,
-            id: randomUUID(),
+            id: uuid(),
         };
         //     // return db.json file return all saved notes as JSON
         readAndAppend(newNote, "./db/db.json");
@@ -73,10 +71,6 @@ app.post("/api/notes", (req, res) => {
         res.errored('error could not add note');
     }
 })
-// GET * should return the 'index.html' file
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "/public/index.html"));
-});
 
 // listener on port 3001
 app.listen(PORT, () =>
