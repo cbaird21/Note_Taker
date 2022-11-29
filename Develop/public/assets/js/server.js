@@ -2,13 +2,12 @@ const fs = require('fs')
 const path = require('path')
 const { randomUUID } = require("crypto");
 
-const util = require("util");
-const { clear } = require("console");
+
 // require express
 const express = require('express');
 const { title } = require('process');
 
-const PORT = 3001
+const PORT = process.env.PORT || 3001;
 
 const app = express();
 // MIDDLEWARE
