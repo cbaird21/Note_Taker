@@ -22,6 +22,7 @@ app.use(express.static("public"));
 
 // GET * should return the 'index.html' file
 app.get("*", (req, res) => {
+    // global variable of dir name which directory this directory, public/index.html
     res.sendFile(path.join(__dirname, "/public/index.html"));
 });
 // GET '/notes' should 
@@ -33,6 +34,7 @@ app.get('/notes', (req, res) => {
 const readFromFile = util.promisify(fs.readFile);
 
 const writeToFile = (destination, content) =>
+    // write to file (destination, json.stringify, then call back of error or data written)
     fs.writeFile(destination, JSON.stringify(content), (err) =>
         err ? console.error(err) : console.info(`\nData written to ${destination}`)
     );
@@ -76,9 +78,9 @@ app.post("/api/notes", (req, res) => {
             body: newNote,
         };
 
-        res.json(response);
+        res.status(201).json(response);
     } else {
-        res.errored('error could not add note');
+        res.status(500).json('error could not add note');
     }
 })
 
