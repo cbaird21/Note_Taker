@@ -7,7 +7,7 @@ const api = require('./routes/index.js')
 const express = require('express');
 const notes = require('./routes/notes.js');
 // const { title } = require('process');
-
+const util = require('./helpers/fsUtils');
 const PORT = process.env.PORT || 3001;
 
 const app = express();
@@ -22,7 +22,7 @@ app.use('/api/notes', notes);
 // GET * should return the 'index.html' file
 app.get("/", (req, res) => {
     // global variable of dir name which directory this directory, public/index.html
-    res.sendFile(path.join(__dirname, "/index.html"));
+    res.sendFile(path.join(__dirname, "/public/index.html"));
 });
 // GET '/notes' should 
 app.get('/notes', (req, res) => {
