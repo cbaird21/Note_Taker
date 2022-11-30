@@ -1,10 +1,9 @@
-const express = require('express')
+const router = require('express').Router();
 
 // import our mdoular routers for /notes
 const notesRouter = require('./notes')
 
-const app = express();
 
-app.use('./notes', notesRouter);
+router.use('./notes', notesRouter);
 
-module.exports = app;
+module.exports = router;
