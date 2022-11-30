@@ -31,5 +31,25 @@ const readAndAppend = (content, file) => {
         }
     });
 };
+const readAndDelete = (content, file, id) => {
+    fs.readFile(file, 'utf8', (err, data) => {
+        if (err) {
+            console.error(err);
+        } else {
+            const parsedData = JSON.parse(data);
+            console.log(parsedData);
 
-module.exports = { readFromFile, writeToFile, readAndAppend };
+            //NEED TO CHECK THE CURRENT DATA
+            // FILTER THE DATA CONTENT PASSED !== 
+            // RETURN THE NEW OBJECT OF ARRAY WITH ALL OBJECTS NOT MATCHING ID
+
+            // THEN WRITE TO FILE EVERYTHING BUT THAT ID
+
+            // parsedData.push(content);
+            // writeToFile(file, parsedData);
+        }
+    });
+
+}
+
+module.exports = { readFromFile, writeToFile, readAndAppend, readAndDelete };
