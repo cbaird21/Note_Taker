@@ -53,8 +53,6 @@ notes.post("/", (req, res) => {
 //         }
 //         return res.send
 //     })
-
-//     readAndDelete()
 //     res.send("note deleted");
 
 // })
