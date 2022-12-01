@@ -25,7 +25,7 @@ THEN I am presented with empty fields to enter a new note title and the note’s
 ## Deployed page
 
 Heroku  
-https://dashboard.heroku.com/apps/nottaker1
+https://nottaker1.herokuapp.com/
 
 ## Credits
 
